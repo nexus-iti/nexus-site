@@ -1,0 +1,42 @@
+# Nexus
+
+> Nexus es software con foco en diseño, AI y productividad. Diseñamos y construimos producto digital pensado desde la experiencia de quien lo usa: interfaces claras, integraciones con AI que ahorran pasos reales y flujos de trabajo sin fricción. ITI CEPT, Montevideo.
+
+Nexus es también el nombre del sistema NEXUS / SGRSI (Gestión de recursos y servicios de informática) del ITI CEPT, en versión 1.0.0. Es un producto privado: la app está en https://app.nexus.wefaber.net.
+
+## Qué hacemos
+
+- Diseño y UX: la interfaz es el producto. Cada pantalla parte de la tarea del usuario y usa un sistema de diseño propio y consistente.
+- Integraciones con AI: automatizan lo repetitivo, explican lo que hacen y siempre se pueden deshacer.
+- Productividad: estados claros, atajos visibles, menos clics. Herramientas que se adaptan al flujo del equipo.
+
+## Módulos de NEXUS / SGRSI
+
+- Pedido de recursos
+- Coordinación de servicios
+- Soporte técnico
+- Inventario
+- Trabajo técnico-administrativo
+
+## Principios
+
+- Diseño primero: se piensa cada pantalla desde la tarea del usuario, no desde la base de datos.
+- AI útil, no decorativa: aparece donde ahorra pasos reales; se explica qué hace y se puede deshacer.
+- Productividad sin fricción: menos clics, estados claros, atajos visibles.
+- Geometría amable: formas simples (círculo, triángulo, rombo) y curvas suaves.
+
+## Proyectos y documentación
+
+- [Sitio de Nexus](https://nexus.wefaber.net/): landing del proyecto.
+- [App de NEXUS / SGRSI](https://app.nexus.wefaber.net): sistema en producción para el ITI CEPT.
+- [Documentación técnica](https://github.com/nexus-iti/nexus-docs): arquitectura, modelo de datos, despliegue, pruebas e informes por versión.
+- [GitHub de Nexus](https://github.com/nexus-iti): organización con el código y las decisiones de diseño.
+
+## Historial de versiones
+
+- v0.1.0: Prototipo front estático (1ra entrega)
+- v0.2.0: API PHP y base de datos (2da entrega)
+- v0.3.0: Administración, roles y recuperación (2da entrega 2.0)
+- v0.4.0: API segura y pruebas (2da entrega 3.0)
+- v0.5.0: Integración de ciberseguridad (2da entrega 4.0)
+- v1.0.0: Arquitectura por capas, i18n y despliegue (3ra entrega). Versión actual.
