@@ -1,10 +1,36 @@
 <!doctype html>
-<html lang="en">
+<html lang="es-UY">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>nexus-site</title>
+    <title>Nexus · Software con foco en diseño, AI y productividad</title>
+    <meta
+      name="description"
+      content="Diseñamos y construimos producto digital pensado desde la experiencia de quien lo usa: interfaces claras, integraciones con AI que ahorran pasos reales y flujos de trabajo sin fricción."
+    />
+    <meta name="theme-color" content="#5d12d2" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Nexus" />
+    <meta property="og:description" content="Software con foco en diseño, AI y productividad." />
+    <meta property="og:image" content="/og.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Host+Grotesk:ital,wght@0,300..800;1,300..800&family=Space+Grotesk:wght@300..700&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      // Aplica el tema guardado antes del primer paint para evitar el flash.
+      try {
+        const t = localStorage.getItem('nexus-theme');
+        if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+      } catch {}
+    </script>
   </head>
   <body>
     <div id="root"></div>
