@@ -13,52 +13,47 @@ bash deploy/site-deploy.sh status     # release activa y releases guardadas
 bash deploy/site-deploy.sh rollback   # vuelve a la release anterior
 ```
 
-## Mudanza: el producto pasa a app.nexus.wefaber.net
+## Cómo está repartido hoy (hecho el 2026-10-23)
 
-Hasta ahora `nexus.wefaber.net` servía gravida (Podman, front en `127.0.0.1:18080`,
-detrás de Cloudflare Access). Para que el producto no quede caído en ningún
-momento, seguí este orden.
+- `nexus.wefaber.net` → este sitio, público, sin Cloudflare Access.
+- `gravida.wefaber.net` → el producto (gravida en Podman, front en `127.0.0.1:18080`),
+  detrás de Cloudflare Access (app `0b676246-247e-4796-82e6-3f42a44ee5b0`).
+- Las rutas viejas del producto en el dominio del sitio (`/login.php`, `/pages/`,
+  `/api/`, `/js/`, `/css/`, `/images/`, `/uploads/`, `*.php`) redirigen con 301 a
+  `gravida.wefaber.net`. La referencia del vhost es `deploy/nginx/nexus.wefaber.net.conf`.
 
-### 1. Una sola vez en el VPS (root)
+## Por qué el producto no quedó en app.nexus.wefaber.net
 
-```bash
-sudo mkdir -p /srv/nexus-site/releases
-sudo chown -R hermes:hermes /srv/nexus-site
-sudo chmod 755 /srv/nexus-site
-```
+La zona `wefaber.net` está en plan Free. El Universal SSL cubre `wefaber.net` y
+`*.wefaber.net`: un solo nivel. Un host de dos niveles (`app.nexus.wefaber.net`) no
+recibe certificado en el edge de Cloudflare y el handshake falla antes de llegar al
+origen. Crear un certificate pack avanzado por API devuelve `503 1401` porque requiere
+Advanced Certificate Manager (pago), y `total_tls` no existe como setting en la zona.
 
-El runner `vps-nexus` tiene que estar disponible para este repo. Si hoy está
-registrado solo en `gravida`, movelo a un runner group de la org `nexus-iti` que
-incluya `nexus-site`, o registrá otro runner con la label `vps-nexus`.
+Consecuencia práctica: **ningún subdominio de dos niveles** bajo `wefaber.net` va a
+funcionar con HTTPS mientras la zona siga en Free. Si hace falta uno, la salida gratis
+es un nombre de un solo nivel (`algo.wefaber.net`).
 
-### 2. Primer deploy del sitio
+Si en algún momento se activa ACM o Total TLS, los pasos para retomar la idea original:
 
-Hacé push a `main`, o corré el workflow a mano. El sitio queda en
-`/srv/nexus-site/current`, pero todavía nadie lo sirve.
+1. **DNS:** CNAME `app.nexus` → `wefaber.net`, proxied.
+2. **Access:** agregar `app.nexus.wefaber.net` a la aplicación del producto.
+3. **Certificado de origen:** `certbot certonly --dns-cloudflare --dns-cloudflare-credentials
+   /home/hermes/apolo/config/cloudflare.ini --dns-cloudflare-propagation-seconds 30
+   -d app.nexus.wefaber.net --key-type ecdsa`.
+4. **nginx:** copiar `deploy/nginx/app.nexus.wefaber.net.conf` a
+   `/etc/nginx/sites-available/`, symlink en `sites-enabled/`, `nginx -t` y reload.
+5. Cambiar el 301 de `deploy/nginx/nexus.wefaber.net.conf` de `gravida.wefaber.net` a
+   `app.nexus.wefaber.net`.
 
-### 3. Levantar app.nexus.wefaber.net (el producto sigue en el dominio viejo)
+## Notas del VPS
 
-1. **Cloudflare DNS:** agregá `app.nexus` con el mismo destino que `nexus` hoy, en
-   modo proxied.
-2. **Cloudflare Access:** agregá `app.nexus.wefaber.net` a la aplicación de Access
-   del producto, con la misma política.
-3. **Certificado:** si el cert actual no cubre `app.nexus.wefaber.net`, emitilo.
-4. **nginx:** creá el bloque de `app.nexus.wefaber.net` copiando el bloque actual.
-   La referencia está en `deploy/nginx/app.nexus.wefaber.net.conf`.
-5. Corré `sudo nginx -t && sudo systemctl reload nginx`. Probá
-   `https://app.nexus.wefaber.net`: login, CSRF y subida de fotos.
-
-### 4. Cambiar nexus.wefaber.net al sitio
-
-1. **nginx:** reemplazá el bloque de `nexus.wefaber.net` por
-   `deploy/nginx/nexus.wefaber.net.conf`, conservando las líneas de TLS. Las rutas
-   viejas del producto (`/login.php`, `/pages/`, `/api/`...) redirigen con 301 a la app.
-2. Corré `sudo nginx -t && sudo systemctl reload nginx`.
-3. **Cloudflare Access:** sacá `nexus.wefaber.net` de la aplicación de Access. El
-   sitio es público; la app sigue protegida en su subdominio.
-
-### 5. Después
-
-- En `gravida`, actualizá las menciones a `nexus.wefaber.net` (están en
-  `deploy/README.md`, `.github/workflows/deploy.yml` y `README.md`).
-- El healthcheck de gravida usa `127.0.0.1:18080`, así que no cambia.
+- El vhost usa el snippet `cloudflare-edge-gate.conf` (`$cf_edge_allowed`) y no
+  `allow/deny`: con `cloudflare-realip.conf` activo, `$remote_addr` es la IP real del
+  cliente y un `allow/deny` devuelve 403 a todo el mundo después del login de Access.
+- El gate de origen deja pasar solo conexiones que vengan del edge de Cloudflare o de
+  loopback. Además hay `listen 127.0.0.1:443` para probar el vhost sin pasar por el edge:
+  `curl --resolve nexus.wefaber.net:443:127.0.0.1 https://nexus.wefaber.net/`.
+- El include `snippets/wellknown.conf` mantiene `security.txt` y `llms.txt` vivos en el
+  vhost (corta el soft-404 del SPA).
+- Los backup del vhost anterior quedan en `/etc/nginx/sites-available/nexus.wefaber.net.bak-*`.
