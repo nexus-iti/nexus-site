@@ -1,0 +1,102 @@
+/* Nexus: generado desde design/tokens.json con `bun run tokens`. No editar a mano. */
+:root,
+[data-theme='light'] {
+  color-scheme: light;
+  --violet-600: #5d12d2;
+  --violet-400: #b931fc;
+  --pink-400: #ff6ac2;
+  --blush-50: #ffe5e5;
+  --bg: var(--blush-50);
+  --surface: #ffffff;
+  --ink: #1b0b3a;
+  --muted: #5b4a73;
+  --border: #e9bfd3;
+  --primary: var(--violet-600);
+  --on-primary: var(--blush-50);
+  --accent: var(--pink-400);
+  --link: var(--violet-600);
+  --primary-soft: #efe4ff;
+  --neutral-soft: #f6eaf0;
+  --success: #0a6283;
+  --success-soft: #dff1f8;
+  --warning: #8a4b00;
+  --warning-soft: #fff0d6;
+  --danger: #b3123b;
+  --danger-soft: #fde4ea;
+  --shadow-xs: 0 1px 2px #1b0b3a0f;
+  --shadow-sm: 0 1px 2px #1b0b3a0d, 0 2px 6px #1b0b3a14;
+  --shadow-md: 0 2px 4px #1b0b3a0f, 0 8px 20px -4px #1b0b3a29;
+  --shadow-lg: 0 4px 8px #1b0b3a14, 0 20px 40px -8px #5d12d23d;
+  --shadow-brand: 0 12px 32px -8px #5d12d266;
+  --focus-ring: 0 0 0 2px #ffe5e5, 0 0 0 4px #5d12d2;
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #12062b;
+  --surface: #1e0c45;
+  --ink: var(--blush-50);
+  --muted: #c9b8e0;
+  --border: #3a1f6b;
+  --primary: var(--violet-400);
+  --on-primary: #12062b;
+  --link: #d9a6ff;
+  --primary-soft: #2a1060;
+  --neutral-soft: #2a1650;
+  --success: #6fd0f0;
+  --success-soft: #0c2a40;
+  --warning: #ffc566;
+  --warning-soft: #3a2a10;
+  --danger: #ff8fab;
+  --danger-soft: #3a1030;
+  --shadow-xs: 0 1px 2px #00000066;
+  --shadow-sm: 0 1px 2px #00000080, 0 2px 6px #0000004d;
+  --shadow-md: 0 2px 4px #00000080, 0 8px 20px -4px #000000b3;
+  --shadow-lg: 0 4px 8px #00000099, 0 20px 40px -8px #000000d9;
+  --shadow-brand: 0 12px 32px -8px #b931fc59;
+  --focus-ring: 0 0 0 2px #12062b, 0 0 0 4px #d9a6ff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --bg: #12062b;
+    --surface: #1e0c45;
+    --ink: var(--blush-50);
+    --muted: #c9b8e0;
+    --border: #3a1f6b;
+    --primary: var(--violet-400);
+    --on-primary: #12062b;
+    --link: #d9a6ff;
+    --primary-soft: #2a1060;
+    --neutral-soft: #2a1650;
+    --success: #6fd0f0;
+    --success-soft: #0c2a40;
+    --warning: #ffc566;
+    --warning-soft: #3a2a10;
+    --danger: #ff8fab;
+    --danger-soft: #3a1030;
+    --shadow-xs: 0 1px 2px #00000066;
+    --shadow-sm: 0 1px 2px #00000080, 0 2px 6px #0000004d;
+    --shadow-md: 0 2px 4px #00000080, 0 8px 20px -4px #000000b3;
+    --shadow-lg: 0 4px 8px #00000099, 0 20px 40px -8px #000000d9;
+    --shadow-brand: 0 12px 32px -8px #b931fc59;
+    --focus-ring: 0 0 0 2px #12062b, 0 0 0 4px #d9a6ff;
+  }
+}
+
+:root {
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-16: 64px;
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 24px;
+  --radius-pill: 999px;
+  --font-display: 'Bricolage Grotesque', system-ui, sans-serif;
+  --font-body: 'Host Grotesk', system-ui, sans-serif;
+  --font-tech: 'Space Grotesk', ui-monospace, monospace;
+}

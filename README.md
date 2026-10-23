@@ -1,35 +1,56 @@
-# React + TypeScript + Vite
+<p align="center">
+  <img src="public/og.jpg" alt="Nexus" width="100%">
+</p>
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+# nexus-site
 
-Currently, two official plugins are available:
+Sitio de Nexus: software con foco en diseño, AI y productividad. Landing de una página construida con el design system Nexus.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Stack
 
-## React Compiler
+Bun · Vite · React 19 · TypeScript · Tailwind CSS v4 · Motion · lucide-react · OxLint · OxFmt
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+## Desarrollo
 
-Note: This will impact Vite dev & build performances.
-You can also try [the experimental native React Compiler support in plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md#rust-react-compiler) by using `compiler: true` in the plugin options instead of using the Babel plugin.
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```sh
+bun install
+bun run dev       # http://localhost:5173
+bun run build     # type-check + build a dist/
+bun run preview   # sirve dist/
+bun run lint      # oxlint
+bun run fmt       # oxfmt
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Deploy
+
+Cada push a `main` publica en `nexus.wefaber.net` (VPS, nginx, runner `vps-nexus`). El producto vive en `app.nexus.wefaber.net`. Detalle y runbook de la mudanza: [`deploy/README.md`](deploy/README.md).
+
+## Estructura
+
+```text
+design/tokens.json                 Tokens del design system (fuente)
+scripts/build-tokens.ts            Genera src/styles/tokens.css (bun run tokens)
+src/styles/tokens.css              Variables CSS por tema (light / dark / prefers-color-scheme)
+src/styles/nexus-components.css    Estilos de los componentes (prefijo nx-)
+src/styles/app.css                 Tailwind v4 + puente tokens → utilidades
+src/components/ui/nexus.tsx        Componentes: Button, Input, Checkbox, Switch, Badge, Card, Avatar, Tabs, Alert, Tooltip, Kbd
+src/content.ts                     Todo el texto del sitio
+src/sections/                      Header, Hero, Pillars, Projects, System, Principles, Closing
+deploy/                            Script de deploy, configs de nginx y runbook
+public/                            Isotipo, banner, patterns, favicon y Open Graph
+```
+
+## Design system
+
+Los tokens y componentes vienen del design system Nexus. Para actualizar:
+
+1. Copiá el `tokens.json` nuevo a `design/tokens.json` y corré `bun run tokens`.
+2. Copiá `components/src/index.tsx` a `src/components/ui/nexus.tsx` y `components/bundle.css` a `src/styles/nexus-components.css` (sin el `@import` de fuentes ni las reglas `body` / `.nx-demo*`, que el sitio ya define).
+
+Reglas que el sitio respeta:
+
+- Un solo botón `primary` por vista.
+- El gradiente de marca solo en piezas de marca (banner, Open Graph); la UI usa planos sólidos.
+- `pink-400` es decorativo, nunca texto.
+- Texto interactivo en `link`, no en `primary` (contraste en dark).
+- Animaciones con Motion, desactivadas con `prefers-reduced-motion`.

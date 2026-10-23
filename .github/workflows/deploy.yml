@@ -1,0 +1,45 @@
+name: Deploy
+
+# Deploy del sitio (nexus.wefaber.net) en cada push a main.
+#
+# El runner es self-hosted (el mismo vps-nexus que usa gravida). Por eso este workflow
+# NO escucha pull_request ni pull_request_target: solo un push a main (requiere permiso
+# de escritura) o un disparo manual. Ningún PR de un fork puede ejecutar código en el VPS.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-nexus-site
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy a nexus.wefaber.net
+    runs-on: [self-hosted, vps-nexus]
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Bun
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install
+        run: bun install --frozen-lockfile
+
+      - name: Lint
+        run: bun run lint
+
+      - name: Build
+        run: bun run build
+
+      - name: Deploy
+        env:
+          # Directorio que sirve nginx del host (root -> $SITE_DIR/current).
+          SITE_DIR: /srv/nexus-site
+        run: bash deploy/site-deploy.sh

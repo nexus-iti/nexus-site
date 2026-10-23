@@ -1,0 +1,646 @@
+/* Nexus components. Reads tokens.css (colors, shadows, spacing, radii, font families). */
+
+/* Button */
+.nx-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-weight: 600;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background-color 0.15s ease,
+    box-shadow 0.15s ease,
+    transform 0.1s ease,
+    border-color 0.15s ease;
+}
+.nx-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+.nx-btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+.nx-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.nx-btn svg {
+  flex: none;
+}
+.nx-btn-sm {
+  height: 32px;
+  padding: 0 12px;
+  font-size: 14px;
+  border-radius: 10px;
+}
+.nx-btn-md {
+  height: 40px;
+  padding: 0 var(--space-4);
+  font-size: 15px;
+}
+.nx-btn-lg {
+  height: 48px;
+  padding: 0 var(--space-6);
+  font-size: 16px;
+  border-radius: 14px;
+}
+.nx-btn-full {
+  width: 100%;
+}
+.nx-btn-primary {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+.nx-btn-primary:hover:not(:disabled) {
+  box-shadow: var(--shadow-brand);
+}
+.nx-btn-primary:focus-visible {
+  box-shadow: var(--focus-ring);
+}
+.nx-btn-secondary {
+  background: var(--surface);
+  color: var(--ink);
+  border-color: var(--border);
+  box-shadow: var(--shadow-xs);
+}
+.nx-btn-secondary:hover:not(:disabled) {
+  border-color: var(--link);
+}
+.nx-btn-ghost {
+  background: transparent;
+  color: var(--link);
+}
+.nx-btn-ghost:hover:not(:disabled) {
+  background: var(--primary-soft);
+}
+.nx-btn-danger {
+  background: var(--danger);
+  color: var(--surface);
+}
+.nx-spinner {
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  animation: nx-spin 0.7s linear infinite;
+}
+@keyframes nx-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nx-spinner {
+    animation-duration: 2s;
+  }
+  .nx-btn,
+  .nx-card,
+  .nx-switch-thumb {
+    transition: none;
+  }
+}
+
+/* Field / Input */
+.nx-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.nx-field-label {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.nx-field-hint,
+.nx-field-error {
+  margin: 0;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--muted);
+  display: flex;
+  gap: var(--space-1);
+  align-items: center;
+}
+.nx-field-error {
+  color: var(--danger);
+}
+.nx-input {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.nx-input-control {
+  width: 100%;
+  box-sizing: border-box;
+  height: 40px;
+  padding: 0 12px;
+  font: inherit;
+  font-size: 15px;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--muted);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-xs);
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+.nx-input-control::placeholder {
+  color: var(--muted);
+  opacity: 1;
+}
+.nx-input-control:hover {
+  border-color: var(--link);
+}
+.nx-input-control:focus-visible {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: var(--focus-ring);
+}
+.nx-input-control:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.nx-input-multiline .nx-input-control {
+  height: auto;
+  padding: 10px 12px;
+  line-height: 22px;
+  resize: vertical;
+}
+.nx-input-has-icon .nx-input-control {
+  padding-left: 38px;
+}
+.nx-input-icon {
+  position: absolute;
+  left: 12px;
+  display: inline-flex;
+  color: var(--muted);
+  pointer-events: none;
+}
+.nx-field-invalid .nx-input-control {
+  border-color: var(--danger);
+}
+
+/* Checkbox */
+.nx-check {
+  display: inline-flex;
+  gap: 10px;
+  align-items: flex-start;
+  cursor: pointer;
+}
+.nx-check-box {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  flex: none;
+  margin-top: 2px;
+}
+.nx-check-box input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+.nx-check-mark {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border: 1.5px solid var(--muted);
+  border-radius: 6px;
+  background: var(--surface);
+  color: transparent;
+  box-shadow: var(--shadow-xs);
+  transition:
+    background-color 0.12s ease,
+    border-color 0.12s ease;
+  pointer-events: none;
+}
+.nx-check-box input:checked + .nx-check-mark {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--on-primary);
+}
+.nx-check-box input:focus-visible + .nx-check-mark {
+  box-shadow: var(--focus-ring);
+}
+.nx-check-box input:disabled + .nx-check-mark {
+  opacity: 0.5;
+}
+.nx-check-text {
+  display: flex;
+  flex-direction: column;
+}
+.nx-check-label {
+  font-size: 15px;
+  line-height: 24px;
+  color: var(--ink);
+}
+.nx-check-desc {
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--muted);
+}
+
+/* Switch */
+.nx-switch-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.nx-switch {
+  position: relative;
+  width: 40px;
+  height: 24px;
+  padding: 0;
+  flex: none;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--muted);
+  background: var(--neutral-soft);
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+}
+.nx-switch-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  background: var(--muted);
+  box-shadow: var(--shadow-xs);
+  transition:
+    transform 0.18s cubic-bezier(0.3, 0.7, 0.4, 1),
+    background-color 0.15s ease;
+}
+.nx-switch[aria-checked='true'] {
+  background: var(--primary);
+  border-color: var(--primary);
+}
+.nx-switch[aria-checked='true'] .nx-switch-thumb {
+  transform: translateX(16px);
+  background: var(--on-primary);
+}
+.nx-switch:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+.nx-switch:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.nx-switch-label {
+  font-size: 15px;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+/* Badge */
+.nx-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 24px;
+  padding: 0 10px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-tech);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.nx-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.nx-badge-neutral {
+  background: var(--neutral-soft);
+  color: var(--ink);
+}
+.nx-badge-primary {
+  background: var(--primary-soft);
+  color: var(--link);
+}
+.nx-badge-success {
+  background: var(--success-soft);
+  color: var(--success);
+}
+.nx-badge-warning {
+  background: var(--warning-soft);
+  color: var(--warning);
+}
+.nx-badge-danger {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+/* Card */
+.nx-card {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  color: var(--ink);
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease,
+    border-color 0.2s ease;
+}
+.nx-card-outline {
+  border: 1px solid var(--border);
+}
+.nx-card-elevated {
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+.nx-card-brand {
+  background: var(--violet-600);
+  color: var(--blush-50);
+}
+.nx-card-brand .nx-card-desc,
+.nx-card-brand .nx-card-eyebrow {
+  color: var(--blush-50);
+}
+.nx-card-interactive {
+  cursor: pointer;
+}
+.nx-card-interactive:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+.nx-card-interactive:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+.nx-card-eyebrow {
+  margin: 0;
+  font-family: var(--font-tech);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.nx-card-title {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 600;
+}
+.nx-card-desc {
+  margin: 0;
+  font-size: 15px;
+  line-height: 22px;
+  color: var(--muted);
+}
+.nx-card-footer {
+  margin-top: var(--space-2);
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+}
+
+/* Avatar */
+.nx-avatar {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  overflow: hidden;
+  border-radius: var(--radius-pill);
+  background: var(--primary-soft);
+  color: var(--link);
+  font-family: var(--font-tech);
+  font-weight: 600;
+}
+.nx-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.nx-avatar-sm {
+  width: 28px;
+  height: 28px;
+  font-size: 11px;
+}
+.nx-avatar-md {
+  width: 40px;
+  height: 40px;
+  font-size: 14px;
+}
+.nx-avatar-lg {
+  width: 56px;
+  height: 56px;
+  font-size: 18px;
+}
+
+/* Tabs */
+.nx-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+.nx-tablist {
+  display: inline-flex;
+  align-self: flex-start;
+  gap: 2px;
+  padding: 4px;
+  border-radius: 14px;
+  background: var(--neutral-soft);
+}
+.nx-tab {
+  height: 34px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+.nx-tab:hover {
+  color: var(--ink);
+}
+.nx-tab[aria-selected='true'] {
+  background: var(--surface);
+  color: var(--link);
+  box-shadow: var(--shadow-sm);
+}
+.nx-tab:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+.nx-tabpanel {
+  font-size: 15px;
+  line-height: 22px;
+  color: var(--ink);
+}
+
+/* Alert */
+.nx-alert {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+.nx-alert-icon {
+  display: inline-flex;
+  flex: none;
+}
+.nx-alert-body {
+  flex: 1;
+  min-width: 0;
+}
+.nx-alert-title {
+  margin: 0;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 20px;
+}
+.nx-alert-text {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--ink);
+  margin-top: 2px;
+}
+.nx-alert-close {
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  margin: -4px -4px 0 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+.nx-alert-close:hover {
+  color: var(--ink);
+}
+.nx-alert-close:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+.nx-alert-info {
+  background: var(--primary-soft);
+  border-color: transparent;
+}
+.nx-alert-info .nx-alert-icon,
+.nx-alert-info .nx-alert-title {
+  color: var(--link);
+}
+.nx-alert-success {
+  background: var(--success-soft);
+  border-color: transparent;
+}
+.nx-alert-success .nx-alert-icon,
+.nx-alert-success .nx-alert-title {
+  color: var(--success);
+}
+.nx-alert-warning {
+  background: var(--warning-soft);
+  border-color: transparent;
+}
+.nx-alert-warning .nx-alert-icon,
+.nx-alert-warning .nx-alert-title {
+  color: var(--warning);
+}
+.nx-alert-danger {
+  background: var(--danger-soft);
+  border-color: transparent;
+}
+.nx-alert-danger .nx-alert-icon,
+.nx-alert-danger .nx-alert-title {
+  color: var(--danger);
+}
+
+/* Tooltip */
+.nx-tooltip {
+  position: relative;
+  display: inline-flex;
+}
+.nx-tooltip-bubble {
+  position: absolute;
+  left: 50%;
+  z-index: 10;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: var(--ink);
+  color: var(--bg);
+  font-size: 13px;
+  line-height: 18px;
+  font-weight: 500;
+  white-space: nowrap;
+  box-shadow: var(--shadow-md);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%) translateY(var(--nx-tip-shift, 4px));
+  transition:
+    opacity 0.12s ease,
+    transform 0.12s ease;
+}
+.nx-tooltip-top .nx-tooltip-bubble {
+  bottom: calc(100% + 8px);
+}
+.nx-tooltip-bottom .nx-tooltip-bubble {
+  top: calc(100% + 8px);
+  --nx-tip-shift: -4px;
+}
+.nx-tooltip:hover .nx-tooltip-bubble,
+.nx-tooltip:focus-within .nx-tooltip-bubble {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Kbd */
+.nx-kbd-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.nx-kbd {
+  display: inline-grid;
+  place-items: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 6px;
+  box-sizing: border-box;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  border-bottom-width: 2px;
+  background: var(--neutral-soft);
+  color: var(--ink);
+  font-family: var(--font-tech);
+  font-size: 12px;
+  font-weight: 500;
+}
+.nx-kbd-plus {
+  color: var(--muted);
+  font-size: 12px;
+}
